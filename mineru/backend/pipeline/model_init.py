@@ -9,6 +9,7 @@ from ...model.mfd.yolo_v8 import YOLOv8MFDModel
 from ...model.mfr.unimernet.Unimernet import UnimernetModel
 from ...model.mfr.pp_formulanet_plus_m.predict_formula import FormulaRecognizer
 from mineru.model.ocr.pytorch_paddle import PytorchPaddleOCR
+from mineru.model.ocr.tesseract_ocr import TesseractViOCR
 from ...model.ori_cls.paddle_ori_cls import PaddleOrientationClsModel
 from ...model.table.cls.paddle_table_cls import PaddleTableClsModel
 # from ...model.table.rec.RapidTable import RapidTableModel
@@ -100,7 +101,24 @@ def ocr_model_init(det_db_box_thresh=0.3,
                    det_db_unclip_ratio=1.8,
                    enable_merge_det_boxes=True
                    ):
-    if lang is not None and lang != '':
+    if lang == 'vi':
+        try:
+            model = TesseractViOCR(
+                det_db_box_thresh=det_db_box_thresh,
+                det_db_unclip_ratio=det_db_unclip_ratio,
+                enable_merge_det_boxes=enable_merge_det_boxes,
+            )
+        except ImportError as e:
+            from loguru import logger
+            logger.warning(f"Tesseract not available, falling back to PaddleOCR: {e}")
+            model = PytorchPaddleOCR(
+                det_db_box_thresh=det_db_box_thresh,
+                lang='latin',
+                use_dilation=True,
+                det_db_unclip_ratio=det_db_unclip_ratio,
+                enable_merge_det_boxes=enable_merge_det_boxes,
+            )
+    elif lang is not None and lang != '':
         model = PytorchPaddleOCR(
             det_db_box_thresh=det_db_box_thresh,
             lang=lang,

@@ -66,6 +66,7 @@ mlx = [
     "mlx-vlm>=0.3.3,<0.4",
 ]
 pipeline = [
+    "pytesseract>=0.3.10",
     "matplotlib>=3.10,<4",
     "ultralytics>=8.3.48,<9",
     "doclayout_yolo==0.0.4",
