@@ -151,6 +151,7 @@ other_lang = [
     'ch_lite (Chinese, English, Chinese Traditional, Japanese)',
     'ch_server (Chinese, English, Chinese Traditional, Japanese)',
     'en (English)',
+    'vi (Vietnamese)',
     'korean (Korean, English)',
     'japan (Chinese, English, Chinese Traditional, Japanese)',
     'chinese_cht (Chinese, English, Chinese Traditional, Japanese)',
